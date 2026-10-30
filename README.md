@@ -1,76 +1,66 @@
-# Online Course Management
+Gerenciamento de Cursos Online
+API inicial para o projeto acadêmico de Gerenciamento de Cursos Online. A API utiliza Node.js, TypeScript, Express e PostgreSQL no Supabase.
+Requisitos
+- Node.js 20 ou superior e npm.
+- Um projeto no Supabase com a string de conexão do PostgreSQL.
+Configuração
+1. Instale as dependências com npm install.
+2. Copie o arquivo .env.example para .env.
+3. Configure DATABASE_URL com a string de conexão do Supabase. Mantenha a senha em sigilo. Configure DB_SSL=true ao utilizar o banco de dados hospedado no Supabase.
+4. No Editor SQL do Supabase, execute o arquivo database/migrations/001_create_initial_schema.sql.
+Execução
+- Desenvolvimento com reinicialização automática: npm run dev
+- Compilar TypeScript: npm run build
+- Executar o servidor compilado: npm start
+A API utiliza a porta 3000 por padrão. Para alterá-la, configure PORT no arquivo .env.
+Verificação de funcionamento
+Inicie o servidor e faça uma requisição GET para:
 
-Starter API for the Online Course Management academic project. The API uses Node.js, TypeScript, Express, and PostgreSQL on Supabase.
+http://localhost:3000/api/health
 
-## Requirements
+A API retornará HTTP 200 e a seguinte resposta:
+{
+  "status": "ok"
+}
 
-- Node.js 20 or later and npm
-- A Supabase project with its PostgreSQL connection string
 
-## Setup
-
-1. Install dependencies with `npm install`.
-2. Copy `.env.example` to `.env`.
-3. Set `DATABASE_URL` to the connection string from Supabase. Keep the password private. Set `DB_SSL=true` when using the Supabase hosted database.
-4. In the Supabase SQL Editor, run [`database/migrations/001_create_initial_schema.sql`](database/migrations/001_create_initial_schema.sql).
-
-## Run
-
-- Development with automatic restart: `npm run dev`
-- Compile TypeScript: `npm run build`
-- Run the compiled server: `npm start`
-
-The API listens on port 3000 by default. Set `PORT` in `.env` to change it.
-
-## Health check
-
-Start the server and request `GET http://localhost:3000/api/health`. It returns HTTP 200 and `{"status":"ok"}`. For example:
-
-```sh
+Exemplo utilizando o terminal:
 curl http://localhost:3000/api/health
-```
 
-This endpoint checks that the API process is responding; it does not query the database.
 
-## Project structure
-
-```text
+Esse endpoint verifica se o processo da API está respondendo, mas não realiza consultas ao banco de dados.
+Estrutura do projeto
 src/
-  config/          Environment configuration
-  controllers/     HTTP request handlers
-  database/        PostgreSQL connection pool
-  middlewares/     Express middleware
-  repositories/    Database access
-  routes/          API route definitions
-  services/        Application logic
-  app.ts           Express application
-  server.ts        HTTP server entry point
+  config/          Configurações do ambiente
+  controllers/     Manipuladores de requisições HTTP
+  database/        Pool de conexões PostgreSQL
+  middlewares/     Middlewares do Express
+  repositories/    Acesso ao banco de dados
+  routes/          Definições das rotas da API
+  services/        Lógica da aplicação
+  app.ts           Aplicação Express
+  server.ts        Ponto de entrada do servidor HTTP
+
 database/
-  migrations/      SQL schema migrations
-docs/              Project documentation and ER diagram
-```
+  migrations/      Migrações do esquema SQL
 
-CRUD endpoints are intentionally left for the feature owners.
+docs/              Documentação do projeto e diagrama ER
 
-## Initial team task split
 
-- João: project setup, architecture, database schema, and health endpoint.
-- Augusto: user-related CRUD.
-- Thiago: course and module CRUD.
-- Daniel: content and user progress CRUD.
-
-Coordinate ownership and API contracts in the shared repository before implementing overlapping changes.
-
-## First GitHub commit and push
-
-Create an empty GitHub repository, then run these commands from the project directory (replace the URL with your repository URL):
-
-```sh
+Os endpoints CRUD foram intencionalmente deixados para os responsáveis por cada funcionalidade.
+Divisão inicial das tarefas da equipe
+- João: configuração do projeto, arquitetura, esquema do banco de dados e endpoint de verificação.
+- Augusto: operações CRUD relacionadas aos usuários.
+- Thiago: operações CRUD de cursos e módulos.
+- Daniel: operações CRUD de conteúdos e progresso dos usuários.
+A equipe deve definir as responsabilidades e os contratos da API no repositório compartilhado antes de implementar funcionalidades que possam gerar conflitos.
+Primeiro commit e envio para o GitHub
+Crie um repositório vazio no GitHub e execute os comandos abaixo no diretório do projeto (substitua a URL pela URL do seu repositório):
 git add .
-git commit -m "chore: initialize online course management API"
+git commit -m "chore: inicializa API de gerenciamento de cursos online"
 git branch -M main
-git remote add origin https://github.com/<your-account>/<your-repository>.git
+git remote add origin https://github.com/<sua-conta>/<seu-repositorio>.git
 git push -u origin main
-```
 
-Never commit `.env`; credentials belong in local environment variables or an approved secrets manager.
+
+Importante: Nunca envie o arquivo .env para o GitHub. As credenciais devem permanecer em variáveis de ambiente locais ou em um gerenciador de segredos aprovado.
