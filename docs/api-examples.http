@@ -1,0 +1,81 @@
+@baseUrl = http://localhost:3000/api
+@userId = replace-with-user-uuid
+@contentId = replace-with-content-uuid
+@moduleId = replace-with-module-uuid
+
+### List users (expect 200)
+GET {{baseUrl}}/users
+
+### Create a user (expect 201)
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Ana Silva",
+  "email": "ana@example.com",
+  "status": "active"
+}
+
+### Get one user (expect 200, or 404 when the UUID does not exist)
+GET {{baseUrl}}/users/{{userId}}
+
+### Update a user (expect 200)
+PUT {{baseUrl}}/users/{{userId}}
+Content-Type: application/json
+
+{
+  "name": "Ana Souza"
+}
+
+### Delete a user (expect 204; expect 409 if courses or modules still reference the user)
+DELETE {{baseUrl}}/users/{{userId}}
+
+### List all contents (expect 200)
+GET {{baseUrl}}/contents
+
+### List contents for a module (expect 200, or 404 when the module does not exist)
+GET {{baseUrl}}/modules/{{moduleId}}/contents
+
+### Create content (expect 201)
+POST {{baseUrl}}/contents
+Content-Type: application/json
+
+{
+  "module_id": "{{moduleId}}",
+  "title": "Introduction",
+  "content": "Lesson text"
+}
+
+### Get one content (expect 200)
+GET {{baseUrl}}/contents/{{contentId}}
+
+### Update content (expect 200)
+PUT {{baseUrl}}/contents/{{contentId}}
+Content-Type: application/json
+
+{
+  "title": "Updated introduction"
+}
+
+### Mark content as watched (expect 201; repeat request expects 409)
+POST {{baseUrl}}/contents/{{contentId}}/watch
+Content-Type: application/json
+
+{
+  "user_id": "{{userId}}"
+}
+
+### List viewers (expect 200)
+GET {{baseUrl}}/contents/{{contentId}}/viewers
+
+### Delete content (expect 204)
+DELETE {{baseUrl}}/contents/{{contentId}}
+
+### Invalid email example (expect 400)
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "name": "Invalid Email",
+  "email": "not-an-email"
+}
